@@ -4,13 +4,14 @@ import os
 import re
 import sys
 import requests
+import html.parser
 
 from loguru import logger
 
 PWD = os.getcwd()
 
 headers = {
-    "User-Agent" : "Mozilla/5.0 (Shining v0.1) ",
+    "User-Agent" : "Mozilla/5.0 (Shining v0.2) ",
 }
 
 def banner():
@@ -49,6 +50,8 @@ def main(chain, target):
     
     for code, filename in zip(source_codes, filenames):
         with open(os.path.join(output_path, filename), "w") as fp:
+            html_parser = html.parser.HTMLParser()
+            code = html_parser.unescape(code)
             print(f"[+] Download {filename}...")
             fp.write(code)
         
